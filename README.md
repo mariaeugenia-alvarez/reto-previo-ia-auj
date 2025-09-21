@@ -8,14 +8,18 @@
 - Explain why your prompt works.
 - Include 2 input → output examples.
 
-⚡ **Evaluation criteria:**
+**Evaluation criteria:** 
 - Prompt quality.
 - Creativity.
 - Clarity of results.
 
+## Description
+I developed a prompt through up to three iterations, refining it to address 10 key features based on [prompt engineering principles](#why-does-this-prompt-work)
+
+I tested my prompt by submitting it as input to ChatGPT-5, and then I asked Grok to evaluate the quality of the response by giving it the same prompt along with the output, using Grok as an LLM-as-judge.
 
 
-## Second Prompt (English)
+## Prompt 
 
 > **Copy and use this prompt:**
 
@@ -35,6 +39,14 @@ Each object in the JSON array must contain the following three fields:
 • genre: The main genre of the movie (string).
 • recommendation_reason: A concise, eloquent, and detailed explanation (string). This reason must directly and specifically reference the user's preferences, highlighting thematic, tonal, or narrative connections. Use language that demonstrates deep cinematic knowledge.
 
+**Flexibility and Resilience:**
+If the user's information is incomplete, vague, or contradictory, use your expertise to make logical and coherent assumptions.
+
+Prioritize coherence over completeness: if only a mood is provided, base all three recommendations on it. If favorite movies are mentioned without genres, infer genres and themes from them.
+
+In the recommendation_reason, explicitly mention any assumptions you have made to justify your choice, for example: "Based on your interest in movies like..., I have assumed you would also enjoy...".
+
+
 **Strict Output Rules:**
 
 • The response must contain only the JSON. Do not include any introductory or closing text.
@@ -44,7 +56,7 @@ Each object in the JSON array must contain the following three fields:
 
 ### Example 1
 
-**User:** 
+**Copy and use this user:** 
 
 ```text
 I'm feeling tired today, and honestly, I don't know what I feel like watching.
@@ -55,72 +67,87 @@ I'm feeling tired today, and honestly, I don't know what I feel like watching.
 [
   {
     "title": "Amélie",
-    "genre": "Romantic Comedy / Fantasy",
-    "recommendation_reason": "When you’re feeling tired and unsure of what to watch, this whimsical French gem offers a soothing escape. Its gentle humor, quirky characters, and dreamlike Parisian setting create a warm, comforting atmosphere that feels like a cinematic lullaby."
+    "genre": "Romantic Comedy",
+    "recommendation_reason": "Since you mentioned feeling tired and uncertain about what you want to watch, I’ve assumed you’d appreciate something light yet emotionally uplifting. 'Amélie' offers a whimsical, feel-good narrative with charming visual inventiveness and gentle humor, making it a soothing choice without demanding too much emotional or cognitive energy."
   },
   {
     "title": "Lost in Translation",
     "genre": "Drama",
-    "recommendation_reason": "For moments of fatigue and uncertainty, Sofia Coppola’s quiet, contemplative film provides a tender mood piece rather than demanding attention. Its soft visuals, delicate humor, and introspective tone allow you to simply drift along with the story’s gentle rhythm."
+    "recommendation_reason": "Your current state of tiredness suggests that a slower, contemplative film might resonate. 'Lost in Translation' provides a quiet, atmospheric experience where mood and subtle emotion carry the story. Its introspective tone allows you to sink into the ambiance without the pressure of a dense plot, aligning with your need for something gentle and absorbing."
   },
   {
     "title": "Paddington 2",
-    "genre": "Family / Comedy",
-    "recommendation_reason": "This charming, lighthearted film is perfect for when your energy is low. It’s visually delightful, filled with kindness and humor, and effortlessly lifts the mood without requiring heavy emotional investment, making it a cozy cinematic comfort blanket."
+    "genre": "Family/Comedy",
+    "recommendation_reason": "Given your low-energy mood, I’ve assumed you might enjoy an uncomplicated but heartwarming film that brings instant comfort. 'Paddington 2' is universally praised for its warmth, humor, and kindness, offering a delightful, restorative watch that is both entertaining and soothing after a tiring day."
   }
 ]
-
 ```
+### Grok evaluation:
+
+Prompt evaluation final Score: *Excellent*
+```diff
+• Relevance: Nuanced picks for a “tired/unsure” mood.
+• Reasoning: Specific, empathetic justifications for each choice.
+• Structure: Perfect JSON and completeness; minor room for more unexpected picks.
+```
+
 
 ### Example 2
 
-**User:** 
+**Copy and use this user:** 
 
 ```text
-My partner left me for someone else. I'm so angry. We used to go to the movies together and he always chose the film, and now I don't know what I'm going to do with my life.
-````
+I like classic cinema, with actors such as Audrey Hepburn or Cary Grant. However, I'm not in mood today for romantic films. My partner left me for someone else. I'm so angry and now I don't know what I'm going to do with my life. 
+```
 
 **Prompt result:**
 ```json
 [
   {
-    "title": "Kill Bill: Vol. 1",
-    "genre": "Action / Revenge",
-    "recommendation_reason": "Channel your anger into Tarantino’s explosive tale of betrayal and vengeance. With its operatic style, unforgettable fight sequences, and fierce female lead, it transforms raw rage into cinematic empowerment, giving you a sense of cathartic release."
+    "title": "North by Northwest",
+    "genre": "Thriller",
+    "recommendation_reason": "Since you enjoy classic cinema and admire Cary Grant, but are not in the mood for romance, 'North by Northwest' is an ideal choice. Hitchcock’s masterpiece blends suspense, wit, and adventure, showcasing Grant at his most charismatic while avoiding sentimental romance. Its brisk pacing and iconic set pieces channel tension and excitement that may help you redirect your anger into pure cinematic thrill."
   },
   {
-    "title": "Wild",
-    "genre": "Drama / Adventure",
-    "recommendation_reason": "Reese Witherspoon’s journey of self-discovery through grief and loss mirrors the challenge of rebuilding life after heartbreak. Its mix of vulnerability and resilience makes it both cathartic and inspiring, offering a reminder that pain can be the start of personal renewal."
+    "title": "The Night of the Hunter",
+    "genre": "Film Noir",
+    "recommendation_reason": "Given your current feelings of anger and uncertainty, I assumed you might connect with a darker, more unsettling classic. 'The Night of the Hunter' offers an intense, haunting narrative with striking expressionist visuals. It avoids romantic clichés and instead explores themes of betrayal and survival, which could resonate with your emotional state while also immersing you in a bold piece of classic cinema."
   },
   {
-    "title": "Frances Ha",
-    "genre": "Comedy / Drama",
-    "recommendation_reason": "This indie gem embraces uncertainty and reinvention. Following Frances through the chaos of failed plans and friendships, it celebrates self-discovery with humor and tenderness, reminding you that life can be reshaped on your own terms—even when someone else used to choose the movies."
+    "title": "12 Angry Men",
+    "genre": "Drama",
+    "recommendation_reason": "Your frustration and sense of injustice may find a cathartic outlet in '12 Angry Men.' This tightly crafted courtroom drama channels raw human conflict into gripping dialogue and moral tension. By choosing this, I’ve assumed you might find solace in watching characters wrestle with anger, prejudice, and fairness—turning personal turmoil into a collective reflection on justice and truth."
   }
 ]
 ```
 
-### Improvements of the second iteration prompt over the basic prompt:
-- **Persona Enhancement:** Instead of "movie expert," the role is set as "exceptional movie curator," making it more distinctive and authoritative.
-- **More Specific Instructions:** The description for `recommendation_reason` now requires a "concise, eloquent, and detailed" explanation, reducing the chance of generic reasons.
-- **Clear Output Rules:** Output rules are grouped and highlighted for clarity, ensuring the model's response is strictly formatted.
+### Grok evaluation:
+
+Prompt evaluation final Score: *Outstanding*
+```diff: 
+• Relevance: Perfectly honors classic-cinema taste while avoiding romance; channels betrayal/anger via thrillers and moral drama.
+• Reasoning: Emotionally intelligent, film-literate links (Hitchcock mastery, betrayal/survival, justice/truth) to user’s state.
+• Structure: Cohesive trio of classics; minor phrasing issue (“I assumed” repetition) and slightly safe selections.
+```
+
+
 
 ##  Why does this prompt work? 
-### Because it covers 9 of 10 key features based on prompt engineering principles:
 
-| Feature                              | BASIC PROMPT                      | SECOND ITERATION                |
-| ------------------------------------- | ---------------------------------- | ------------------------------- |
-| **Defined Goal and Role**             | ✅ (Movie expert, curator)         | ✅ (Exceptional movie curator)   |
-| **Clear and Specific Instructions**   | ✅ (Recommend 3 movies, JSON format) | ✅ (Recommend 3 movies, JSON format, more specific for recommendation_reason) |
-| **Restrictive Output Format**         | ❌ (Only JSON, lazy text)      | ✅ (Only JSON, no extra text, grouped output rules) |
-| **Context and Input Examples**        | ✅ (Genres, Favorite Movies, Key Elements, Mood) | ✅ (Genres, Favorite Movies, Key Elements, Mood) |
-| **Content/Tone Restriction**          | ❌ (Generic recommendation_reason) | ✅ (Concise, eloquent, detailed recommendation_reason) |
-| **Avoidance of Ambiguity**            | ✅ (Direct, unambiguous instructions) | ✅ (Direct, unambiguous instructions) |
-| **Call to Action/Specific Task**      | ✅ (Recommend, generate)           | ✅ (Recommend, generate)        |
-| **Adequate Level of Detail**          | ✅ (Fields: title, genre, recommendation_reason) | ✅ (Fields: title, genre, recommendation_reason) |
-| **Personalization and Adaptation**    | ✅ (Based on user preferences)     | ✅ (Based on user preferences)  |
-| **Resilience to Incomplete Inputs**   | ❌ (Assumes all preferences provided) | ❌ (Assumes all preferences provided) |
+### Because it covers 10 key features based on prompt engineering principles:
+
+| Feature                              | BASIC PROMPT                      | SECOND ITERATION                | LAST ITERATION |
+| ------------------------------------- | ---------------------------------- | ------------------------------- | -------------- |
+| **Defined Goal and Role**             | ❌ (None)                   | ✅ (Exceptional movie curator)   | ✅ (Exceptional movie curator) |
+| **Clear and Specific Instructions**   | ✅ (Recommend 3 movies, JSON format) | ✅ (Recommend 3 movies, JSON format, more specific for recommendation_reason) | ✅ (Recommend 3 movies, JSON format, more specific for recommendation_reason) |
+| **Restrictive Output Format**         | ❌ (Only JSON, lazy text)      | ✅ (Only JSON, no extra text, grouped output rules) | ✅ (Only JSON, no extra text, grouped output rules) |
+| **Context and Input Examples**        | ✅ (Genres, Favorite Movies, Key Elements, Mood) | ✅ (Genres, Favorite Movies, Key Elements, Mood) | ✅ (Genres, Favorite Movies, Key Elements, Mood) |
+| **Content/Tone Restriction**          | ❌ (Generic recommendation_reason) | ✅ (Concise, eloquent, detailed recommendation_reason) | ✅ (Concise, eloquent, detailed recommendation_reason) |
+| **Avoidance of Ambiguity**            | ✅ (Direct, unambiguous instructions) | ✅ (Direct, unambiguous instructions) | ✅ (Direct, unambiguous instructions) |
+| **Call to Action/Specific Task**      | ✅ (Recommend, generate)           | ✅ (Recommend, generate)        | ✅ (Recommend, generate) |
+| **Adequate Level of Detail**          | ✅ (Fields: title, genre, recommendation_reason) | ✅ (Fields: title, genre, recommendation_reason) | ✅ (Fields: title, genre, recommendation_reason) |
+| **Personalization and Adaptation**    | ✅ (Based on user preferences)     | ✅ (Based on user preferences)  | ✅ (Based on user preferences) |
+| **Resilience to Incomplete Inputs**   | ❌ (Assumes all preferences provided) | ❌ (Assumes all preferences provided) | ✅ (Model instructed to prioritize coherence and make justified assumptions when lack of user info) |
 
 
 
