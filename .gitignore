@@ -1,0 +1,4 @@
+venv
+firebase-debug.log
+functions/__pycache__/main.cpython-312.pyc
+functions/__pycache__/main.cpython-313.pyc

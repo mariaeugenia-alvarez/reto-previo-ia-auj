@@ -1,0 +1,4 @@
+firebase-functions
+requests
+openai
+functions-framework
